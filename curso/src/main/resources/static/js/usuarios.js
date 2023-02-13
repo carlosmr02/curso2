@@ -14,10 +14,16 @@ async function cargarUsuarios() {
 });
 const usuarios = await request.json();
 
-console.log(usuarios);
+let listadoHtml = '';
 
-let usuario = '<tr> <td>123</td><td>Prueba Moy</td><td>lucasmoy@hotmail.com</td><td>234234234</td><td><a href="#" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a></td></tr>';
+for (let usuario of usuarios) {
 
-document.querySelector('#usuarios tbody').outerHTML = usuario;
+    let usuarioHtml = '<tr> <td>'+usuario.id+'</td><td>'+ usuario.nombre + ' ' + usuario.apellido + '</td>'
+            + usuario.email+'</td><td>'+usuario.telefono
+            + '</td><td><a href="#" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a></td></tr>';
+    listadoHtml += usuarioHtml
+}
+
+document.querySelector('#usuarios tbody').outerHTML = listadoHtml;
 
 }
