@@ -2,8 +2,12 @@ package com.cursojava.curso.models;
 
 
 import lombok.*;
+import org.hibernate.Hibernate;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
@@ -14,7 +18,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String nombre;
     String apellidos;
@@ -23,7 +26,13 @@ public class Usuario {
     @Column(name="password")
     String password;
     // Aunque Lombok puede generar equals & hashcode, no es recommendable
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Usuario usuario = (Usuario) o;
+        return id != null && Objects.equals(id, usuario.id);
+    }
 
     @Override
     public int hashCode() {

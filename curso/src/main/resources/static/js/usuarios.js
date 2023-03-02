@@ -1,29 +1,44 @@
 // Call the dataTables jQuery plugin
 $(document).ready(function() {
-    cargarUsuarios();
+  cargaUsuarios();
   $('#usuarios').DataTable();
 });
 
-async function cargarUsuarios() {
-      const request = await fetch('usuarios', {
-      method : 'GET',
-      headers: {
+async function cargaUsuarios(){
+  const request = await fetch('api/usuarios', {
+    method: 'GET',
+    headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
-      }
-});
-const usuarios = await request.json();
+    }
+  });
+  const usuarios = await request.json();
+  let listadoHTML='';
+  for (let usuario of usuarios){
+    let botonEliminar ='<a href="#" onclick="eliminarUsuario('+usuario.id+')" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>'
+    let usuarioHTML= '<tr><td>'+usuario.id+
+                     '<td>'+usuario.nombre+
+                     '</td><td>'+usuario.email+
+                     '</td><td>'+usuario.telefono+
+                     '</td><td>'+botonEliminar+'</td><tr>';
+    listadoHTML+=usuarioHTML;
+  }
+  console.log(usuarios);
 
-let listadoHtml = '';
-
-for (let usuario of usuarios) {
-
-    let usuarioHtml = '<tr> <td>'+usuario.id+'</td><td>'+ usuario.nombre + ' ' + usuario.apellido + '</td>'
-            + usuario.email+'</td><td>'+usuario.telefono
-            + '</td><td><a href="#" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a></td></tr>';
-    listadoHtml += usuarioHtml
+  document.querySelector('#usuarios tbody').outerHTML=listadoHTML;
 }
 
-document.querySelector('#usuarios tbody').outerHTML = listadoHtml;
-
+async function eliminarUsuario(id){
+    if (!confirm('¿Desea borrar el usuario?')){
+        return;
+    }
+    alert(' voy a eliminar el usuario '+id);
+    const request = await fetch('api/eliminar/'+id, {
+        method: 'DELETE',
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        }
+    });
+    location.reload();
 }
