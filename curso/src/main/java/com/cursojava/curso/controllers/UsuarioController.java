@@ -13,7 +13,7 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioDao usuarioDao;
-    @RequestMapping(value="/api/usuarios/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="api/usuarios/{id}",method= RequestMethod.GET)
     public Usuario getUsuario(@PathVariable Long id){
         Usuario usuario=new Usuario();
         usuario.setId(id);
@@ -23,11 +23,13 @@ public class UsuarioController {
         usuario.setTelefono("234234234");
         return usuario;
     }
-    @RequestMapping(value="api/usuarios", method = RequestMethod.GET)
+
+    @RequestMapping(value="api/usuarios",method= RequestMethod.GET)
     public List<Usuario> getUsuarios(){
         return usuarioDao.getUsuarios();
     }
-    @RequestMapping(value="api/usuarios", method = RequestMethod.POST)
+
+    @RequestMapping(value="api/usuarios",method= RequestMethod.POST)
     public void registraUsuario(@RequestBody Usuario usuario){
         usuarioDao.registraUsuario(usuario);
     }

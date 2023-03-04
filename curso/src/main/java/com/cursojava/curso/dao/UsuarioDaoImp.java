@@ -11,15 +11,15 @@ import java.util.List;
 
 @Repository
 @Transactional
+public class UsuarioDaoImp implements UsuarioDao{
 
-public class UsuarioDaoImp implements UsuarioDao {
     @PersistenceContext
     private EntityManager entityManager;
+
     @Override
     public List<Usuario> getUsuarios() {
-        String query = "FROM Usuario";
-        if(entityManager==null) return new ArrayList<>();
-        return entityManager.createQuery(query).getResultList();
+        String query="FROM Usuario";
+        return entityManager.createQuery(query,Usuario.class).getResultList();
     }
 
     @Override
@@ -33,4 +33,13 @@ public class UsuarioDaoImp implements UsuarioDao {
         entityManager.merge(usuario);
     }
 
+    @Override
+    public boolean verificarCredenciales(Usuario usuario) {
+        String query="FROM Usuario where email=:email and password=:password";
+        List<Usuario> lista=entityManager.createQuery(query,Usuario.class)
+                .setParameter("email",usuario.getEmail())
+                .setParameter("password",usuario.getPassword())
+                .getResultList();
+        return !lista.isEmpty();
+    }
 }
