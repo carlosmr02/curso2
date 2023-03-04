@@ -4,10 +4,7 @@ package com.cursojava.curso.models;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +15,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class Usuario {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String nombre;
     String apellidos;

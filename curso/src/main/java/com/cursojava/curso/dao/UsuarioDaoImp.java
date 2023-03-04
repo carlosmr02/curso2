@@ -27,4 +27,10 @@ public class UsuarioDaoImp implements UsuarioDao {
         Usuario usuario=entityManager.find(Usuario.class,id);
         entityManager.remove(usuario);
     }
+
+    @Override
+    public void registraUsuario(Usuario usuario) {
+        entityManager.merge(usuario);
+    }
+
 }
