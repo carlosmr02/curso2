@@ -17,7 +17,7 @@ public class UsuarioDaoImp implements UsuarioDao{
 
     @PersistenceContext
     private EntityManager entityManager;
-
+//hola
     @Override
     public Usuario getUsuario(Long id) {
         return null;
